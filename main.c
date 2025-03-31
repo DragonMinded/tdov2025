@@ -202,7 +202,9 @@ void main()
     while ( 1 )
     {
         // Speed is different on real hardware compared to Demul, so timer-based instead of code delay based.
-        int timer = timer_start(50000);
+        // Wait just a bit longer than 2 frames so that we always wait for vblank into the third. This was
+        // calculated by dividing microseconds in a second by 60 frames and then multiplying by about ~2.5.
+        int timer = timer_start(40000);
 
         // Grab inputs.
         maple_poll_buttons();
@@ -241,12 +243,12 @@ void main()
             video_draw_character(xpos, ypos, ff->font, rgb(127, 127, 127), message[x]);
         }
 
-        // Wait for vblank and draw it!
-        video_display_on_vblank();
-
         // Designed around 20FPS.
         while (timer_left(timer) > 0) { ; }
         timer_stop(timer);
+
+        // Wait for vblank and draw it!
+        video_display_on_vblank();
 
         // Bump the position (20x a second for 60Hz).
         pos += 3;
