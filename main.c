@@ -177,10 +177,6 @@ void main()
     // Initialize audio system.
     audio_init();
 
-    // Set up our root directory.
-    char rootpath[1024];
-    strcpy(rootpath, "rom://");
-
     // Load font.
     fontface_t *ff = load("rom://amiga.ttf", 16);
 
